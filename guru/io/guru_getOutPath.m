@@ -11,10 +11,10 @@ function outdir = guru_getOutPath(dirtype)
   switch (dirtype)
     case {'cache'}
         project_name = guru_getProjectName();
-        outdir = fullfile('~', '_cache', project_name);
+        outdir = fullfile(mfe_getuserdir(), '_cache', project_name);
 
     case {'datasets'}
-        outdir = fullfile('~', 'datasets');
+        outdir = fullfile(mfe_getuserdir(), 'datasets');
 
     case {'plot', 'results'}
         project_dir = guru_getProjectDir();
@@ -24,15 +24,10 @@ function outdir = guru_getOutPath(dirtype)
           error('Unknown type: %s', dirtype);
 end;
 
-%  if (~guru_findstr(de_GetBaseDir(), outdir) && ~guru_findstr('~', outdir))
-%    outdir = fullfile(de_GetBaseDir(), outdir);
-%  end;
-  
-
 
 function script_name = guru_getScriptName()
-    abc = dbstack;
-    script_name = abc(length(abc)).name;
+    stk = dbstack;
+    script_name = stk(end).name;
 
 
 function script_dir = guru_getScriptDir()
